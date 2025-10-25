@@ -3,8 +3,16 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List
 
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+try:  # pragma: no cover - exercised indirectly via imports
+    from fastapi import FastAPI, HTTPException
+    from fastapi.middleware.cors import CORSMiddleware
+except ModuleNotFoundError:  # pragma: no cover
+    import sys
+    from pathlib import Path
+
+    sys.path.append(str(Path(__file__).resolve().parents[2]))
+    from fastapi import FastAPI, HTTPException
+    from fastapi.middleware.cors import CORSMiddleware
 
 from .schemas.config import (
     ConfigPreview,

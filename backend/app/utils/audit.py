@@ -24,7 +24,7 @@ class AuditTrail:
 
     def entries(self) -> Iterable[AuditEntry]:
         for item in self._read_all():
-            yield AuditEntry.parse_obj(item)
+            yield AuditEntry.from_dict(item)
 
 
 __all__ = ["AuditTrail"]

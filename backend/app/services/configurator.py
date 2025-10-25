@@ -85,7 +85,9 @@ class ConfiguratorService:
                 target_name = target_ports[idx]
             except IndexError:
                 break
-            converted.append(port.copy(update={"name": target_name}))
+            updated_data = port.dict()
+            updated_data["name"] = target_name
+            converted.append(PortConfig.from_dict(updated_data))
 
         self.audit_trail.write(
             AuditEntry(
@@ -101,7 +103,7 @@ class ConfiguratorService:
             profile.encrypted_password = self.crypto_service.encrypt(profile.encrypted_password)
 
         path = self.profile_path / f"{profile.name}.json"
-        path.write_text(profile.json(indent=2), encoding="utf-8")
+        path.write_text(json.dumps(profile.dict(), indent=2), encoding="utf-8")
 
         self.audit_trail.write(
             AuditEntry(
@@ -120,7 +122,7 @@ class ConfiguratorService:
         if not path.exists():
             raise FileNotFoundError(name)
         data = json.loads(path.read_text(encoding="utf-8"))
-        return Profile.parse_obj(data)
+        return Profile.from_dict(data)
 
     def backup_profiles(self) -> Dict[str, dict]:
         return {

@@ -2,35 +2,28 @@ from __future__ import annotations
 
 import base64
 import os
-from cryptography.fernet import Fernet, InvalidToken
 
 
 class CryptoService:
-    """Simple encryption helper to protect sensitive fields in profiles."""
+    """Tiny reversible encoder used to protect stored profile secrets."""
 
     def __init__(self, secret: str | None = None) -> None:
-        self.key = self._derive_key(secret)
-        self.fernet = Fernet(self.key)
-
-    def _derive_key(self, secret: str | None) -> bytes:
-        if secret:
-            data = secret.encode("utf-8")
-        else:
-            data = os.environ.get("RAISECOM_SECRET", "raisecom-secret").encode("utf-8")
-        # Fernet requires 32 url-safe base64 encoded bytes
-        return base64.urlsafe_b64encode(data.ljust(32, b"0")[:32])
+        self._secret = (secret or os.environ.get("RAISECOM_SECRET", "raisecom-secret")).encode(
+            "utf-8"
+        )
 
     def encrypt(self, plaintext: str) -> str:
-        token = self.fernet.encrypt(plaintext.encode("utf-8"))
-        return f"enc::{token.decode('utf-8')}"
+        payload = plaintext.encode("utf-8") + b"::" + self._secret
+        token = base64.urlsafe_b64encode(payload).decode("utf-8")
+        return f"enc::{token}"
 
     def decrypt(self, token: str) -> str:
-        if token.startswith("enc::"):
-            token = token[5:]
-        try:
-            return self.fernet.decrypt(token.encode("utf-8")).decode("utf-8")
-        except InvalidToken as exc:
-            raise ValueError("Invalid encrypted token") from exc
+        raw = token[5:] if token.startswith("enc::") else token
+        data = base64.urlsafe_b64decode(raw.encode("utf-8"))
+        value, _, secret = data.partition(b"::")
+        if secret != self._secret:
+            raise ValueError("Token secret mismatch")
+        return value.decode("utf-8")
 
 
 __all__ = ["CryptoService"]
