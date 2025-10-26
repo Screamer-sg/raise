@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./data:/app/data:ro
+      - ./storage:/app/storage
+    environment:
+      - RAISECOM_SECRET=${RAISECOM_SECRET:-raisecom-secret}
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend

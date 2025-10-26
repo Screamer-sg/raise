@@ -1,0 +1,37 @@
+{
+  "id": "rcs-sw24",
+  "name": "Raisecom RCS-SW24",
+  "description": "24-port Gigabit Ethernet switch",
+  "ports": [
+    {"name": "GE1/0/1", "type": "gigabit"},
+    {"name": "GE1/0/2", "type": "gigabit"},
+    {"name": "GE1/0/3", "type": "gigabit"},
+    {"name": "GE1/0/4", "type": "gigabit"},
+    {"name": "GE1/0/5", "type": "gigabit"},
+    {"name": "GE1/0/6", "type": "gigabit"},
+    {"name": "GE1/0/7", "type": "gigabit"},
+    {"name": "GE1/0/8", "type": "gigabit"},
+    {"name": "GE1/0/9", "type": "gigabit"},
+    {"name": "GE1/0/10", "type": "gigabit"},
+    {"name": "GE1/0/11", "type": "gigabit"},
+    {"name": "GE1/0/12", "type": "gigabit"},
+    {"name": "GE1/0/13", "type": "gigabit"},
+    {"name": "GE1/0/14", "type": "gigabit"},
+    {"name": "GE1/0/15", "type": "gigabit"},
+    {"name": "GE1/0/16", "type": "gigabit"},
+    {"name": "GE1/0/17", "type": "gigabit"},
+    {"name": "GE1/0/18", "type": "gigabit"},
+    {"name": "GE1/0/19", "type": "gigabit"},
+    {"name": "GE1/0/20", "type": "gigabit"},
+    {"name": "GE1/0/21", "type": "gigabit"},
+    {"name": "GE1/0/22", "type": "gigabit"},
+    {"name": "GE1/0/23", "type": "gigabit"},
+    {"name": "GE1/0/24", "type": "gigabit"}
+  ],
+  "defaults": {
+    "vlans": [1, 100, 200],
+    "qinq": [
+      {"outer": 3000, "inner": 3010}
+    ]
+  }
+}
