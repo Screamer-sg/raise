@@ -1,0 +1,35 @@
+{
+  "models": {
+    "RCMS2104": {
+      "ports": [
+        {"id": "ge1/1", "type": "uplink"},
+        {"id": "ge1/2", "type": "uplink"},
+        {"id": "ge1/3", "type": "access"},
+        {"id": "ge1/4", "type": "access"}
+      ],
+      "features": ["qos", "lldp", "snmp"],
+      "default_vlan": 1
+    },
+    "RCMS2108": {
+      "ports": [
+        {"id": "ge1/1", "type": "uplink"},
+        {"id": "ge1/2", "type": "uplink"},
+        {"id": "ge1/3", "type": "access"},
+        {"id": "ge1/4", "type": "access"},
+        {"id": "ge1/5", "type": "access"},
+        {"id": "ge1/6", "type": "access"},
+        {"id": "ge1/7", "type": "access"},
+        {"id": "ge1/8", "type": "access"}
+      ],
+      "features": ["qos", "lldp", "snmp", "stack"],
+      "default_vlan": 10
+    }
+  },
+  "field_mappings": {
+    "hostname": "hostname",
+    "location": "location",
+    "mgmt_ip": "management.ip",
+    "mgmt_mask": "management.mask",
+    "mgmt_gw": "management.gateway"
+  }
+}
